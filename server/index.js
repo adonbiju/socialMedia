@@ -42,6 +42,14 @@ const storage = multer.diskStorage({
 // use Routes
 app.get('/', (req, res) => res.send('Hello world!'))
 
-const port = process.env.PORT || 8082;
-
-app.listen(port, () => console.log(`Server running on port ${port}`));
+/* MONGOOSE SETUP */
+const PORT = process.env.PORT || 6001;
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server runing on Port: ${PORT}`));
+  })
+  .catch((error) => console.log(`${error} did not connect wiith the port`));
