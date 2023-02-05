@@ -72,7 +72,19 @@ const Navbar = () => {
           </FlexBetween>
         )}
     </FlexBetween>
-    
+
+    {/* Desktop Navbar */}
+    {isNonMobileScreens ? (
+        <FlexBetween gap="2rem">
+          Desktop
+        </FlexBetween>
+      ):
+      (
+        <FlexBetween gap="2rem">
+          Mobile
+        </FlexBetween>
+      )
+    } 
     </FlexBetween>
   )
 }
