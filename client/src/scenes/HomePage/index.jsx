@@ -1,8 +1,8 @@
 import React from 'react'
-
+import Navbar from 'scenes/Navbar'
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div><Navbar/></div>
   )
 }
 
