@@ -37,9 +37,23 @@ const MyPostWidget = ({ picturePath }) => {
     const token = useSelector((state) => state.token);
 
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-    
+
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
+
+    const handlePost = async () => {
+        const formData = new FormData();
+        formData.append("userId", _id);
+        formData.append("description", post);
+        if (image) {
+            // retrive the image from the Dropzone
+            // Here "picture" is the name comes from "/posts" of backend Server
+            // In Backend ,Index.js Line Number 49
+            formData.append("picture", image);
+            //picturePath is the name that comes from Post Model
+            formData.append("picturePath", image.name);
+        }
+    }
     return(
         <div>hii</div>
     )
