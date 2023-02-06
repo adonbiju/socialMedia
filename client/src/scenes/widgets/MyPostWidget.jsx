@@ -64,7 +64,11 @@ const MyPostWidget = ({ picturePath }) => {
         setPost("");
     }
     return(
-        <div>hii</div>
+        <WidgetWrapper>
+        <FlexBetween gap="1.5rem">
+           <UserImage image={picturePath} />
+        </FlexBetween>
+        </WidgetWrapper>
     )
 }
 export default MyPostWidget;
