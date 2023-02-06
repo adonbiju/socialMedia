@@ -47,8 +47,21 @@ const loginSchema = yup.object().shape({
   };
   
 const Form = () => {
+
+  const [pageType, setPageType] = useState("login");
+  const { palette } = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const isLogin = pageType === "login";
+  const isRegister = pageType === "register";
+
   return (
-    <div>Form</div>
+    <Formik 
+    initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+    validationSchema={isLogin ? loginSchema : registerSchema}>
+        
+    </Formik>
   )
 }
 
