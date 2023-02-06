@@ -80,8 +80,8 @@ const UserWidget = ({ userId, picturePath }) => {
      </FlexBetween>
 
       <Divider />
-      
-     {/* SECOND ROW */}
+
+    {/* SECOND ROW */}
      <Box p="1rem 0">
         <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <LocationOnOutlined fontSize="large" sx={{ color: main }} />
@@ -94,6 +94,25 @@ const UserWidget = ({ userId, picturePath }) => {
       </Box>
 
       <Divider />
+
+    {/* THIRD ROW */}
+      <Box p="1rem 0">
+        <FlexBetween mb="0.5rem">
+          <Typography color={medium}>Who's viewed your profile</Typography>
+          <Typography color={main} fontWeight="500">
+            {viewedProfile}
+          </Typography>
+        </FlexBetween>
+        <FlexBetween>
+          <Typography color={medium}>Impressions of your post</Typography>
+          <Typography color={main} fontWeight="500">
+            {impressions}
+          </Typography>
+        </FlexBetween>
+      </Box>
+
+      <Divider />
+
     
     </WidgetWrapper>
     );
