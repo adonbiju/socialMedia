@@ -1,3 +1,5 @@
+import Friend from "components/Friend";
+
 const PostWidget = ({
     postId,
     postUserId,
@@ -11,7 +13,12 @@ const PostWidget = ({
   }) => 
   {
     return (
-        <div>hii</div>
+        <div><Friend
+        friendId={postUserId}
+        name={name}
+        subtitle={location}
+        userPicturePath={userPicturePath}
+      /></div>
     )
   }
   export default PostWidget;
