@@ -3,6 +3,7 @@ import Navbar from 'scenes/Navbar'
 import UserWidget from 'scenes/widgets/UserWidget'
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
+import AdvertWidget from "scenes/widgets/AdvertWidget";
 
 import { useSelector } from "react-redux";
 const HomePage = () => {
@@ -27,6 +28,12 @@ const HomePage = () => {
           <MyPostWidget picturePath={picturePath} />
           <PostsWidget userId={_id} />
         </Box>
+        {isNonMobileScreens && (
+          <Box flexBasis="26%">
+            <AdvertWidget />
+            
+          </Box>
+        )}
         
     </Box>
   </Box>
