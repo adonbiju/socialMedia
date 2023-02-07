@@ -67,6 +67,20 @@ const PostWidget = ({
           src={`http://localhost:5000/assets/${picturePath}`}
         />
       )}
+      <FlexBetween mt="0.25rem">
+        <FlexBetween gap="1rem">
+          <FlexBetween gap="0.3rem">
+            <IconButton onClick={patchLike}>
+              {isLiked ? (
+                <FavoriteOutlined sx={{ color: primary }} />
+              ) : (
+                <FavoriteBorderOutlined />
+              )}
+            </IconButton>
+            <Typography>{likeCount}</Typography>
+          </FlexBetween>
+          </FlexBetween>
+          </FlexBetween>
       </WidgetWrapper>
     )
   }
