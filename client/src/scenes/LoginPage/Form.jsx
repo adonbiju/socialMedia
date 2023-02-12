@@ -12,7 +12,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "state";
+import { setLogin,setLoading } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
@@ -57,6 +57,13 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) =>{
+    
+    dispatch(
+      setLoading({
+        loading:true
+      })
+    );
+
     // this allows us to send form info with image
     const formData = new FormData();
     for (let value in values) {
@@ -74,12 +81,23 @@ const Form = () => {
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
+    dispatch(
+      setLoading({
+        loading:false
+      })
+    );
+
     if (savedUser) {
       setPageType("login");
     }
   }
 
   const login = async (values, onSubmitProps) =>{
+    dispatch(
+      setLoading({
+        loading:true
+      })
+    );
     const loggedInResponse = await fetch("http://localhost:5000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -92,6 +110,12 @@ const Form = () => {
         setLogin({
           user: loggedIn.user,
           token: loggedIn.token,
+        })
+      );
+
+      dispatch(
+        setLoading({
+          loading:false
         })
       );
       navigate("/home");

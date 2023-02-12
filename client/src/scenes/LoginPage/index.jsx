@@ -1,11 +1,17 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
-
+import { useSelector } from "react-redux";
+import Loading from "components/Loading";
 const LoginPage = () => {
 
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-
+  const loading = useSelector((state) => state.loading);
+  if (loading) {
+    return (
+      <Loading/>
+    );
+  } else {
   return (
     <Box>
       <Box
@@ -32,7 +38,7 @@ const LoginPage = () => {
        <Form/>
       </Box>
     </Box>
-  )
+  )}
 }
 
 export default LoginPage
