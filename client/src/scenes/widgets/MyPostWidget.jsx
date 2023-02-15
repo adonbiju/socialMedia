@@ -24,6 +24,8 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const MyPostWidget = ({ picturePath }) => {
 
@@ -31,6 +33,7 @@ const MyPostWidget = ({ picturePath }) => {
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
     const [post, setPost] = useState("");
+    const [open, setOpen] = useState(false);
     const { palette } = useTheme();
 
     const { _id } = useSelector((state) => state.user);
@@ -40,7 +43,7 @@ const MyPostWidget = ({ picturePath }) => {
 
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
-
+    
     const handlePost = async () => {
         const formData = new FormData();
         formData.append("userId", _id);
@@ -62,10 +65,19 @@ const MyPostWidget = ({ picturePath }) => {
         dispatch(setPosts({ posts }));
         setImage(null);
         setPost("");
-    }
+        setOpen(true)
+  }
+  const handleClose=() => {
+      setOpen(false)
+  }
     return(
         <WidgetWrapper>
-
+          
+          <Snackbar open={open} anchorOrigin={{vertical:'top',horizontal:'right'}}  autoHideDuration={6000} onClose={handleClose} >
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+             Post Added Successfully!!
+            </Alert>
+          </Snackbar>
             <FlexBetween gap="1.5rem">
                 <UserImage image={picturePath} />
                 <InputBase
