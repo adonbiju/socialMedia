@@ -2,9 +2,14 @@ import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   
@@ -13,6 +18,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
+
+  const [snackbar, setSnackbar] = useState(false);
+  const [backDrop, setBackDrop] = useState(false);
 
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
@@ -23,6 +31,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
 
   const patchFriend = async () => {
+    setBackDrop(true)
     const response = await fetch(
       `http://localhost:5000/user/${_id}/${friendId}`,
       {
@@ -35,9 +44,24 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     );
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
+    setBackDrop(false)
+    setSnackbar(true)
   };
+
+const handleClose=() => {
+    setSnackbar(false)
+}
   return(
     <FlexBetween>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
+      <Snackbar open={snackbar} anchorOrigin={{vertical:'top',horizontal:'right'}}  autoHideDuration={6000} onClose={handleClose} >
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+              Added Or Removed {name} as your Friend Successfully!!
+        </Alert>
+      </Snackbar>
     <FlexBetween gap="1rem">
       <UserImage image={userPicturePath} size="55px" />
       <Box

@@ -72,9 +72,7 @@ const MyPostWidget = ({ picturePath }) => {
         setBackDrop(false)
         setSnackbar(true)
   }
-  const handleCloseBackDrop=()=>{
 
-  }
   const handleClose=() => {
       setSnackbar(false)
   }
@@ -82,9 +80,7 @@ const MyPostWidget = ({ picturePath }) => {
         <WidgetWrapper>
           
           <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}
-            onClick={handleCloseBackDrop}
-          >
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}>
               <CircularProgress color="inherit" />
           </Backdrop>
 
