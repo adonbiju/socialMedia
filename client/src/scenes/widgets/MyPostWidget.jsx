@@ -26,6 +26,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const MyPostWidget = ({ picturePath }) => {
 
@@ -33,7 +35,8 @@ const MyPostWidget = ({ picturePath }) => {
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
     const [post, setPost] = useState("");
-    const [open, setOpen] = useState(false);
+    const [snackbar, setSnackbar] = useState(false);
+    const [backDrop, setBackDrop] = useState(false);
     const { palette } = useTheme();
 
     const { _id } = useSelector((state) => state.user);
@@ -45,6 +48,7 @@ const MyPostWidget = ({ picturePath }) => {
     const medium = palette.neutral.medium;
     
     const handlePost = async () => {
+        setBackDrop(true)
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
@@ -65,19 +69,31 @@ const MyPostWidget = ({ picturePath }) => {
         dispatch(setPosts({ posts }));
         setImage(null);
         setPost("");
-        setOpen(true)
+        setBackDrop(false)
+        setSnackbar(true)
+  }
+  const handleCloseBackDrop=()=>{
+
   }
   const handleClose=() => {
-      setOpen(false)
+      setSnackbar(false)
   }
     return(
         <WidgetWrapper>
           
-          <Snackbar open={open} anchorOrigin={{vertical:'top',horizontal:'right'}}  autoHideDuration={6000} onClose={handleClose} >
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}
+            onClick={handleCloseBackDrop}
+          >
+              <CircularProgress color="inherit" />
+          </Backdrop>
+
+          <Snackbar open={snackbar} anchorOrigin={{vertical:'top',horizontal:'right'}}  autoHideDuration={6000} onClose={handleClose} >
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
              Post Added Successfully!!
             </Alert>
           </Snackbar>
+
             <FlexBetween gap="1.5rem">
                 <UserImage image={picturePath} />
                 <InputBase
