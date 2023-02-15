@@ -1,4 +1,5 @@
 import { Box, useMediaQuery } from "@mui/material";
+import Loading from "components/Loading";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -27,7 +28,10 @@ const ProfilePage = () => {
     getUser();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!user) return null;
+  // if (!user) return null;
+  if(!user){
+    return(<Loading/>)
+  }
   return (
     <Box>
     <Navbar />
