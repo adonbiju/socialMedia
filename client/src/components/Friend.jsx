@@ -59,8 +59,8 @@ const handleClose=() => {
 
       <Snackbar open={snackbar} anchorOrigin={{vertical:'top',horizontal:'right'}}  autoHideDuration={6000} onClose={handleClose} >
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-              Added Or Removed {name} as your Friend Successfully!!
-        </Alert>
+              {isFriend? "Added" : "Removed"} {name} as your Friend Successfully!!
+        </Alert>   
       </Snackbar>
     <FlexBetween gap="1rem">
       <UserImage image={userPicturePath} size="55px" />
