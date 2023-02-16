@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState} from "react";
 import {
   Box,
   IconButton,
@@ -11,7 +11,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import {
-  Search,
   Message,
   DarkMode,
   LightMode,
@@ -24,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+import LiveSearch from "./LiveSearch";
 
 const Navbar = () => {
 
@@ -62,13 +62,11 @@ const Navbar = () => {
           <FlexBetween
             backgroundColor={neutralLight}
             borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
+            gap="0rem"
+            padding="0.1rem .1rem"
           >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
+            {/* <InputBase placeholder="Search..." /> */}
+            <LiveSearch/>
           </FlexBetween>
         )}
     </FlexBetween>

@@ -2,12 +2,15 @@ import express from "express";
 import {
   getUser,
   getUserFriends,
-  addRemoveFriend
+  addRemoveFriend,
+  getAllUsers
 } from "../controllers/user.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
+/* READ ALl users*/
+router.get('/',verifyToken,getAllUsers);
 /* READ */
 router.get('/:id',verifyToken,getUser);
 router.get("/:id/friends", verifyToken, getUserFriends);
