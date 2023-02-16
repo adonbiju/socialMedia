@@ -21,6 +21,30 @@ its is **MERN STACK** Project.
 * JWT (JSON WEB TOKEN) :for Authentication.
 * Multer for File upload.
 ```
+
+## Error Codes
+
+2XX Codes
+A success response lets the browser know that the request was received, understood, and accepted 
+```bash
+* 200 — OK
+* 201 — Created
+* 204 — No Content
+```
+4XX Codes
+This type of status code is intended for situations in which an error seems to have been caused by the browser or user, like the infamous 404 error.
+```bash
+* 400 — Bad Request
+* 401 — Unauthorized
+* 404 — Not Found
+* 409 — Conflict.
+```
+5XX Codes
+Simply put, these codes are sent when the server failed to fulfil a request.
+```bash
+* 500 - Internal Server Error
+* 503 — Service Unavailable
+```
 ## Run Locally
 
 Clone the project
