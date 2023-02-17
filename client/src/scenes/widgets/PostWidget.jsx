@@ -4,11 +4,11 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme ,Dialog,DialogActions,DialogContent,DialogTitle,Button} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 
@@ -25,6 +25,8 @@ const PostWidget = ({
   }) => 
   {
     const [isComments, setIsComments] = useState(false);
+    const [userLikedList,setUserLikedList]= useState(false);
+    const [dialog, setDialog]=useState(false)
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
@@ -47,6 +49,22 @@ const PostWidget = ({
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
     };
+    const showUsersLikedList= async()=>{
+        const response = await fetch(`http://localhost:5000/posts/${postId}/postLikedUsersDetails`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        setUserLikedList(data);
+    }
+    useEffect(() => {
+      showUsersLikedList();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if(!userLikedList) return null
+    const handleClose=()=>{
+      setDialog(false)
+    }
+
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
@@ -77,7 +95,12 @@ const PostWidget = ({
                 <FavoriteBorderOutlined />
               )}
             </IconButton>
-            <Typography>{likeCount}</Typography>
+            <Typography onClick={()=>setDialog(true)}  sx={{
+            "&:hover": {
+              color: primary,
+              cursor: "pointer",
+            },
+            }}>{likeCount}</Typography>
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">
@@ -107,6 +130,30 @@ const PostWidget = ({
           <Divider />
         </Box>
       )}
+        {/* it will pop up the friends details */}
+        
+        <Dialog open={dialog}>
+          <DialogTitle>Subscribe</DialogTitle>
+          <DialogContent dividers>
+            <>
+            <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
+            {userLikedList.map((friend) => (
+              <Friend
+                key={friend._id}
+                friendId={friend._id}
+                name={`${friend.firstName} ${friend.lastName}`}
+                subtitle={friend.occupation}
+                userPicturePath={friend.picturePath}
+              />
+            ))}
+            </Box>
+        </>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+         </Dialog>
+            
       </WidgetWrapper>
     )
   }

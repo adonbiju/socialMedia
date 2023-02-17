@@ -16,6 +16,10 @@ import {
     Button,
     IconButton,
     useMediaQuery,
+    Backdrop,
+    Snackbar,
+    Alert,
+    CircularProgress
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Dropzone from "react-dropzone";
@@ -24,10 +28,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+
 
 const MyPostWidget = ({ picturePath }) => {
 

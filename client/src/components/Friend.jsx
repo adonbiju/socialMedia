@@ -1,15 +1,11 @@
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme,Backdrop ,CircularProgress,Alert,Snackbar} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   
@@ -21,7 +17,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
   const [snackbar, setSnackbar] = useState(false);
   const [backDrop, setBackDrop] = useState(false);
-
+  
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
