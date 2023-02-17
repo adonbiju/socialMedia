@@ -11,7 +11,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost ,deletePost} from "state";
-import Popup from "./Popup";
+import PopupWidget from "./PopupWidget";
 
 const PostWidget = ({
     postId,
@@ -147,7 +147,7 @@ const PostWidget = ({
       )}
         {/* it will pop up the friends details */}
         
-      <Popup title="Likes" openPopup={openPopup} setOpenPopup={setOpenPopup}>
+      <PopupWidget title="Likes" openPopup={openPopup} setOpenPopup={setOpenPopup}>
           <>
             <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
             {(userLikedList!==null && userLikedList.length!==0)?(
@@ -176,7 +176,7 @@ const PostWidget = ({
             }
             </Box>
         </>
-      </Popup>
+      </PopupWidget>
         <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}>
           <CircularProgress color="inherit" />
         </Backdrop>
