@@ -1,6 +1,6 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
-
+import { unlinkSync,existsSync } from "fs";
 
 /* CREATE */
 export const createPost = async (req, res) => {
@@ -89,6 +89,21 @@ export const PostLikedUsersDetails = async (req, res) => {
       }
     )
     res.status(200).json(formattedUsers);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+
+export const deletePost = async (req, res) => {
+  try {
+    const { id,picturePath } = req.params;
+    const fileExist = existsSync('./public/assets/'+picturePath)
+    await Post.deleteOne({_id:id})
+    if(fileExist){
+      unlinkSync('./public/assets/'+picturePath)
+    }
+    res.status(200).json({ message: "Post has been deleted successfully!!!"});
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

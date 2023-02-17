@@ -4,7 +4,8 @@ import {
     getFeedPosts,
     getUserPosts,
     likePost,
-    PostLikedUsersDetails
+    PostLikedUsersDetails,
+    deletePost
     }from "../controllers/posts.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -18,4 +19,6 @@ router.get("/:userId/posts", verifyToken, getUserPosts);
 router.patch("/:id/like", verifyToken, likePost);
 router.get("/:id/postLikedUsersDetails",verifyToken, PostLikedUsersDetails);
 
+// delete single post
+router.delete("/:id/:picturePath/deletePost",verifyToken,deletePost)
 export default router;
