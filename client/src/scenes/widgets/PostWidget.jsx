@@ -4,14 +4,14 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme ,Dialog,DialogActions,DialogContent,DialogTitle,
-  Button,Backdrop,CircularProgress} from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme ,Backdrop,CircularProgress} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
+import Popup from "./Popup";
 
 const PostWidget = ({
     postId,
@@ -27,7 +27,7 @@ const PostWidget = ({
   {
     const [isComments, setIsComments] = useState(false);
     const [userLikedList,setUserLikedList]= useState(null);
-    const [dialog, setDialog]=useState(false)
+    const [openPopup, setOpenPopup] = useState(false)
     const [backDrop,setBackDrop]=useState(false)
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
@@ -65,13 +65,9 @@ const PostWidget = ({
     }
     const showPostLikedUserDialog=()=>{
       setBackDrop(true)
-      showUsersLikedList().then(()=>setDialog(true)).then(()=>setBackDrop(false))
+      showUsersLikedList().then(()=>setOpenPopup(true)).then(()=>setBackDrop(false))
     }
 
-    const handleClose=()=>{
-      setDialog(false)
-    }
- 
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
@@ -139,12 +135,9 @@ const PostWidget = ({
       )}
         {/* it will pop up the friends details */}
         
-        <Dialog open={dialog} >
-          <DialogTitle>Likes</DialogTitle>
-          <DialogContent dividers>
-            <>
+      <Popup title="Likes" openPopup={openPopup} setOpenPopup={setOpenPopup}>
+          <>
             <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
-
             {(userLikedList!==null && userLikedList.length!==0)?(
             <>
               {userLikedList.map((friend) => (
@@ -171,11 +164,7 @@ const PostWidget = ({
             }
             </Box>
         </>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
-         </Dialog>
+      </Popup>
         <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}>
           <CircularProgress color="inherit" />
         </Backdrop>
