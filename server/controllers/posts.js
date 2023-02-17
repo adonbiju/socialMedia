@@ -54,7 +54,7 @@ export const likePost = async (req, res) => {
     const { userId } = req.body;
     const post = await Post.findById(id);
     const isLiked = post.likes.get(userId);
-
+   
     if (isLiked) {
       post.likes.delete(userId);
     } else {
@@ -68,6 +68,27 @@ export const likePost = async (req, res) => {
     );
 
     res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+export const PostLikedUsersDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+  
+    const post = await Post.findById(id)
+    const myMap = new Map(post.likes)
+    const postLikedUserIds = [...myMap.keys()];
+    const  users = await Promise.all(
+      postLikedUserIds.map((id) => User.findById(id))
+    );
+    const formattedUsers = users.map(
+      ({ _id, firstName, lastName, occupation, location, picturePath }) => {
+        return { _id, firstName, lastName, occupation, location, picturePath };
+      }
+    )
+    res.status(200).json(formattedUsers);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

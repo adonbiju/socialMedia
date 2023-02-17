@@ -23,10 +23,12 @@ const FriendListWidget = ({ userId }) => {
       dispatch(setFriends({ friends: data }));
     };
   
+  
     useEffect(() => {
       getFriends();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  
     return(
       <WidgetWrapper>
       <Typography
@@ -38,6 +40,7 @@ const FriendListWidget = ({ userId }) => {
         Friend List
       </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
+        <>
         {friends.map((friend) => (
           <Friend
             key={friend._id}
@@ -47,8 +50,9 @@ const FriendListWidget = ({ userId }) => {
             userPicturePath={friend.picturePath}
           />
         ))}
+        </>
       </Box>
-    </WidgetWrapper>
+      </WidgetWrapper>
     )
 }
 
