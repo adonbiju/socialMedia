@@ -4,11 +4,12 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme ,Dialog,DialogActions,DialogContent,DialogTitle,Button} from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme ,Dialog,DialogActions,DialogContent,DialogTitle,
+  Button,Backdrop,CircularProgress} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 
@@ -25,8 +26,9 @@ const PostWidget = ({
   }) => 
   {
     const [isComments, setIsComments] = useState(false);
-    const [userLikedList,setUserLikedList]= useState(false);
+    const [userLikedList,setUserLikedList]= useState(null);
     const [dialog, setDialog]=useState(false)
+    const [backDrop,setBackDrop]=useState(false)
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
@@ -36,8 +38,10 @@ const PostWidget = ({
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
+    const dark = palette.neutral.dark
 
     const patchLike = async () => {
+      setBackDrop(true)
       const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
         method: "PATCH",
         headers: {
@@ -48,7 +52,9 @@ const PostWidget = ({
       });
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
+      setBackDrop(false)
     };
+    
     const showUsersLikedList= async()=>{
         const response = await fetch(`http://localhost:5000/posts/${postId}/postLikedUsersDetails`, {
           method: "GET",
@@ -57,14 +63,15 @@ const PostWidget = ({
         const data = await response.json();
         setUserLikedList(data);
     }
-    useEffect(() => {
-      showUsersLikedList();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    if(!userLikedList) return null
+    const showPostLikedUserDialog=()=>{
+      setBackDrop(true)
+      showUsersLikedList().then(()=>setDialog(true)).then(()=>setBackDrop(false))
+    }
+
     const handleClose=()=>{
       setDialog(false)
     }
-
+ 
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
@@ -95,7 +102,7 @@ const PostWidget = ({
                 <FavoriteBorderOutlined />
               )}
             </IconButton>
-            <Typography onClick={()=>setDialog(true)}  sx={{
+            <Typography onClick={showPostLikedUserDialog}  sx={{
             "&:hover": {
               color: primary,
               cursor: "pointer",
@@ -132,20 +139,36 @@ const PostWidget = ({
       )}
         {/* it will pop up the friends details */}
         
-        <Dialog open={dialog}>
-          <DialogTitle>Subscribe</DialogTitle>
+        <Dialog open={dialog} >
+          <DialogTitle>Likes</DialogTitle>
           <DialogContent dividers>
             <>
             <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
-            {userLikedList.map((friend) => (
-              <Friend
-                key={friend._id}
-                friendId={friend._id}
-                name={`${friend.firstName} ${friend.lastName}`}
-                subtitle={friend.occupation}
-                userPicturePath={friend.picturePath}
-              />
-            ))}
+
+            {(userLikedList!==null && userLikedList.length!==0)?(
+            <>
+              {userLikedList.map((friend) => (
+                <Friend
+                  key={friend._id}
+                  friendId={friend._id}
+                  name={`${friend.firstName} ${friend.lastName}`}
+                  subtitle={friend.occupation}
+                  userPicturePath={friend.picturePath}
+                />
+              ))}
+            </>
+             
+            ):(
+              <Typography
+                color={dark}
+                variant="h5"
+                fontWeight="500"
+                sx={{ mb: "1.5rem" }}
+            >
+              No Likes for this Post Yet!!
+            </Typography>         
+            )
+            }
             </Box>
         </>
           </DialogContent>
@@ -153,6 +176,9 @@ const PostWidget = ({
             <Button onClick={handleClose}>Close</Button>
         </DialogActions>
          </Dialog>
+        <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={backDrop}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
             
       </WidgetWrapper>
     )
