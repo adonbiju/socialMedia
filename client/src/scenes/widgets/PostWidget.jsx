@@ -2,9 +2,10 @@ import {
   ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
   FavoriteOutlined,
+  SendOutlined,
+  DeleteOutlineOutlined
 } from "@mui/icons-material";
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { Box, Divider, IconButton, Typography, useTheme ,Backdrop,CircularProgress} from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme ,Backdrop,CircularProgress,InputBase} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -25,7 +26,7 @@ const PostWidget = ({
     comments,
   }) => 
   {
-    const [isComments, setIsComments] = useState(false);
+    const [openComment, setOpenComment] = useState(false);
     const [userLikedList,setUserLikedList]= useState(null);
     const [openPopup, setOpenPopup] = useState(false)
     const [backDrop,setBackDrop]=useState(false)
@@ -39,6 +40,7 @@ const PostWidget = ({
     const main = palette.neutral.main;
     const primary = palette.primary.main;
     const dark = palette.neutral.dark
+    const neutralLight = palette.neutral.light;
 
     const patchLike = async () => {
       setBackDrop(true)
@@ -118,7 +120,7 @@ const PostWidget = ({
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">
-            <IconButton onClick={() => setIsComments(!isComments)}>
+            <IconButton onClick={() => setOpenComment(!openComment)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
             <Typography>{comments.length}</Typography>
@@ -127,12 +129,12 @@ const PostWidget = ({
           </FlexBetween>
           {(loggedInUserId===postUserId)&&
               <IconButton onClick={handleDeletePost}>
-                  <DeleteOutlineOutlinedIcon  />
+                  <DeleteOutlineOutlined  />
               </IconButton>
           }
           </FlexBetween>
 
-        {isComments && (
+        {openComment && (
         <Box mt="0.5rem">
           {comments.map((comment, i) => (
             <Box key={`${name}-${i}`}>
@@ -142,7 +144,12 @@ const PostWidget = ({
               </Typography>
             </Box>
           ))}
-          <Divider />
+           <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="0rem" padding="0.1rem .1rem">
+              <InputBase placeholder="Write a comment.....!" sx={{ width: "100%",padding: "1rem 2rem",height:"3rem"}}/>
+              <IconButton onClick={handleDeletePost}>
+                  <SendOutlined />
+              </IconButton>
+          </FlexBetween>
         </Box>
       )}
         {/* it will pop up the friends details */}
