@@ -5,7 +5,7 @@ import {
   SendOutlined,
   DeleteOutlineOutlined
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme ,Backdrop,CircularProgress,InputBase} from "@mui/material";
+import { Box, IconButton, Typography, useTheme ,Backdrop,CircularProgress,InputBase} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -28,6 +28,7 @@ const PostWidget = ({
   {
     const [openComment, setOpenComment] = useState(false);
     const [userLikedList,setUserLikedList]= useState(null);
+    const [comment,setComment]= useState('')
     const [openPopup, setOpenPopup] = useState(false)
     const [backDrop,setBackDrop]=useState(false)
     const dispatch = useDispatch();
@@ -79,6 +80,24 @@ const PostWidget = ({
           "Content-Type": "application/json",
         },
       }).then(()=>dispatch(deletePost(postId))).then(()=>setBackDrop(false))
+    }
+
+    const handleComment = async()=>{
+        const commentData = {
+          userId:loggedInUserId,
+          comment:comment
+        }
+        console.log(commentData)
+         await fetch(`http://localhost:5000/posts/${postId}/comment`, {
+            method: "PATCH",
+            headers: { 
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body:  JSON.stringify(commentData),
+        });
+        //const posts = await response.json();
+        setComment('')
     }
 
     return (
@@ -136,17 +155,10 @@ const PostWidget = ({
 
         {openComment && (
         <Box mt="0.5rem">
-          {comments.map((comment, i) => (
-            <Box key={`${name}-${i}`}>
-              <Divider />
-              <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                {comment}
-              </Typography>
-            </Box>
-          ))}
            <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="0rem" padding="0.1rem .1rem">
-              <InputBase placeholder="Write a comment.....!" sx={{ width: "100%",padding: "1rem 2rem",height:"3rem"}}/>
-              <IconButton onClick={handleDeletePost}>
+              <InputBase placeholder="Write a comment.....!" sx={{ width: "100%",padding: "1rem 2rem",height:"3rem"}}
+                 onChange={(e) => setComment(e.target.value)} value={comment}/>
+              <IconButton onClick={handleComment}>
                   <SendOutlined />
               </IconButton>
           </FlexBetween>
