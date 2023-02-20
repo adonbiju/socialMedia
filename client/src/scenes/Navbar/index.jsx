@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import {
   Box,
   IconButton,
@@ -26,7 +26,6 @@ import FlexBetween from "components/FlexBetween";
 import LiveSearch from "./LiveSearch";
 
 const Navbar = () => {
-
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +42,7 @@ const Navbar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
-    <FlexBetween gap="1.75rem">
+      <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -66,13 +65,13 @@ const Navbar = () => {
             padding="0.1rem .1rem"
           >
             {/* <InputBase placeholder="Search..." /> */}
-            <LiveSearch/>
+            <LiveSearch />
           </FlexBetween>
         )}
-    </FlexBetween>
+      </FlexBetween>
 
-    {/* Desktop Navbar */}
-    {isNonMobileScreens ? (
+      {/* Desktop Navbar */}
+      {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
@@ -109,37 +108,37 @@ const Navbar = () => {
             </Select>
           </FormControl>
         </FlexBetween>
-      ):
-      (
-      <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
-        <Menu />
-      </IconButton>
-      )
-    }
+      ) : (
+        <IconButton
+          onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+        >
+          <Menu />
+        </IconButton>
+      )}
 
-    {/* MOBILE NAV */}
+      {/* MOBILE NAV */}
       {!isNonMobileScreens && isMobileMenuToggled && (
-         <Box
-         position="fixed"
-         right="0"
-         bottom="0"
-         height="100%"
-         zIndex="10"
-         maxWidth="500px"
-         minWidth="300px"
-         backgroundColor={background}
-       >
-         {/* CLOSE ICON */}
-         <Box display="flex" justifyContent="flex-end" p="1rem">
+        <Box
+          position="fixed"
+          right="0"
+          bottom="0"
+          height="100%"
+          zIndex="10"
+          maxWidth="500px"
+          minWidth="300px"
+          backgroundColor={background}
+        >
+          {/* CLOSE ICON */}
+          <Box display="flex" justifyContent="flex-end" p="1rem">
             <IconButton
               onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
             >
               <Close />
             </IconButton>
-         </Box>
+          </Box>
 
-            {/* MENU ITEMS */}
-            <FlexBetween
+          {/* MENU ITEMS */}
+          <FlexBetween
             display="flex"
             flexDirection="column"
             justifyContent="center"
@@ -186,12 +185,10 @@ const Navbar = () => {
               </Select>
             </FormControl>
           </FlexBetween>
-
-
-       </Box>
-      )} 
+        </Box>
+      )}
     </FlexBetween>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
