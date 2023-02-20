@@ -28,8 +28,10 @@ const PostWidget = ({
   {
     const [openComment, setOpenComment] = useState(false);
     const [userLikedList,setUserLikedList]= useState(null);
+    const [userCommentedList,setUserCommentedList]= useState(null);
     const [comment,setComment]= useState('')
     const [openPopup, setOpenPopup] = useState(false)
+    const [openCommentsPopup, setOpenCommentsPopup] = useState(false)
     const [backDrop,setBackDrop]=useState(false)
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
@@ -100,6 +102,18 @@ const PostWidget = ({
         setComment('')
     }
 
+    const showUsersCommentedList= async()=>{
+      const response = await fetch(`http://localhost:5000/posts/${postId}/postCommentedUsersDetails`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setUserCommentedList(data);
+  }
+    const showPostCommentedUserDialog=()=>{
+      setBackDrop(true)
+      showUsersCommentedList().then(()=>setOpenCommentsPopup(true)).then(()=>setBackDrop(false))
+    }
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
@@ -130,19 +144,14 @@ const PostWidget = ({
                 <FavoriteBorderOutlined />
               )}
             </IconButton>
-            <Typography onClick={showPostLikedUserDialog}  sx={{
-            "&:hover": {
-              color: primary,
-              cursor: "pointer",
-            },
-            }}>{likeCount}</Typography>
+            <Typography onClick={showPostLikedUserDialog}  sx={{"&:hover": { color: primary, cursor: "pointer", },}}>{likeCount}</Typography>
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">
             <IconButton onClick={() => setOpenComment(!openComment)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <Typography>{comments.length}</Typography>
+            <Typography onClick={showPostCommentedUserDialog}  sx={{"&:hover": { color: primary, cursor: "pointer", },}}>{comments.length}</Typography>
           </FlexBetween>
 
           </FlexBetween>
@@ -190,6 +199,45 @@ const PostWidget = ({
                 sx={{ mb: "1.5rem" }}
             >
               No Likes for this Post Yet!!
+            </Typography>         
+            )
+            }
+            </Box>
+        </>
+      </PopupWidget>
+      <PopupWidget title="Comments" openPopup={openCommentsPopup} setOpenPopup={setOpenCommentsPopup}>
+          <>
+            <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
+            
+            {(userCommentedList!==null && userCommentedList.length!==0)?(
+            <>
+              {userCommentedList.map((comment) => (
+                <>
+                <Friend
+                  key={comment.commentBy._id}
+                  friendId={comment.commentBy._id}
+                  name={`${comment.commentBy.firstName} ${comment.commentBy.lastName}`}
+                  subtitle={comment.commentBy.location}
+                  userPicturePath={comment.commentBy.picturePath}
+                />
+                <Box sx={{backgroundColor:neutralLight ,ml:"4rem",mr:"1rem"}}>
+                <Typography color={dark} variant="h5" fontWeight="500" sx={{mb: "1.5rem",padding:"1rem 1rem" }}>
+                  {comment.comment}
+               </Typography>
+               </Box> 
+                </>
+                )
+              )}
+            </>
+             
+            ):(
+              <Typography
+                color={dark}
+                variant="h5"
+                fontWeight="500"
+                sx={{ mb: "1.5rem" }}
+            >
+              No Comments for this Post Yet!!
             </Typography>         
             )
             }

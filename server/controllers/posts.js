@@ -1,7 +1,7 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 import { unlinkSync,existsSync } from "fs";
-
+import mongoose from "mongoose";
 /* CREATE */
 export const createPost = async (req, res) => {
     try {
@@ -73,7 +73,7 @@ export const likePost = async (req, res) => {
   }
 };
 
-export const PostLikedUsersDetails = async (req, res) => {
+export const postLikedUsersDetails = async (req, res) => {
   try {
     const { id } = req.params;
   
@@ -124,6 +124,17 @@ export const createComment = async (req, res) => {
     });
     const updatedPost = await Post.findById(id);
     res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+export const postCommentedUsersDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const postId=mongoose.Types.ObjectId(id)
+    const post = await  Post.findOne(({_id:postId})).populate("comments.commentBy","firstName lastName  location picturePath")
+    res.status(200).json(post.comments);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

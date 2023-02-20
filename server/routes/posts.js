@@ -4,9 +4,10 @@ import {
     getFeedPosts,
     getUserPosts,
     likePost,
-    PostLikedUsersDetails,
+    postLikedUsersDetails,
     deletePost,
-    createComment
+    createComment,
+    postCommentedUsersDetails
     }from "../controllers/posts.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -18,8 +19,9 @@ router.get("/:userId/posts", verifyToken, getUserPosts);
 
 
 router.patch("/:id/like", verifyToken, likePost);
-router.get("/:id/postLikedUsersDetails",verifyToken, PostLikedUsersDetails);
+router.get("/:id/postLikedUsersDetails",verifyToken, postLikedUsersDetails);
 router.patch("/:id/comment", verifyToken,createComment);
+router.get("/:id/postCommentedUsersDetails", postCommentedUsersDetails);
 
 /* delete single post */
 router.delete("/:id/:picturePath/deletePost",verifyToken,deletePost)
