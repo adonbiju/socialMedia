@@ -17,8 +17,6 @@ import {
   IconButton,
   useMediaQuery,
   Backdrop,
-  Snackbar,
-  Alert,
   CircularProgress,
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
@@ -28,16 +26,17 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+import { createPost } from "helper/api";
+import {useSnackbar} from "notistack"
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
-  const [snackbar, setSnackbar] = useState(false);
   const [backDrop, setBackDrop] = useState(false);
   const { palette } = useTheme();
-
+  const {enqueueSnackbar} = useSnackbar();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
 
@@ -59,22 +58,24 @@ const MyPostWidget = ({ picturePath }) => {
       //picturePath is the name that comes from Post Model
       formData.append("picturePath", image.name);
     }
-    const response = await fetch(`http://localhost:5000/posts`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
+
+
+    // const response = await fetch(`http://localhost:5000/posts`, {
+    //   method: "POST",
+    //   headers: { Authorization: `Bearer ${token}` },
+    //   body: formData,
+    // });
+
+    const response=await createPost(token,formData)
     const posts = await response.json();
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");
     setBackDrop(false);
-    setSnackbar(true);
+    enqueueSnackbar('Post Added Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
   };
 
-  const handleClose = () => {
-    setSnackbar(false);
-  };
+  
   return (
     <WidgetWrapper>
       <Backdrop
@@ -83,17 +84,6 @@ const MyPostWidget = ({ picturePath }) => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-
-      <Snackbar
-        open={snackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Post Added Successfully!!
-        </Alert>
-      </Snackbar>
 
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />

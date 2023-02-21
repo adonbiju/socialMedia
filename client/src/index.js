@@ -18,7 +18,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { SnackbarProvider } from 'notistack';
 const persistConfig = { key: "root", storage, version: 1 };
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
@@ -37,7 +37,9 @@ root.render(
   <React.StrictMode>
    <Provider store={store}>
       <PersistGate loading={null} persistor={persistStore(store)}>
+      <SnackbarProvider maxSnack={3} autoHideDuration={4000}>
         <App />
+        </SnackbarProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

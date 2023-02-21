@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "scenes/LoginPage";
-import HomePage from "scenes/HomePage";
-import ProfilePage from "scenes/ProfilePage";
 import { routes } from "./routes";
 
 import { useMemo } from "react";
@@ -13,7 +11,6 @@ function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
-  const login = routes[0];
   return (
     <div className="App">
       <BrowserRouter>
