@@ -102,12 +102,12 @@ const PostWidget = ({
   };
 
   const handleComment = async () => {
+    setBackDrop(true);
     const commentData = {
       userId: loggedInUserId,
       comment: comment,
     };
-    console.log(commentData);
-    await fetch(`http://localhost:5000/posts/${postId}/comment`, {
+    const response=await fetch(`http://localhost:5000/posts/${postId}/comment`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -115,7 +115,9 @@ const PostWidget = ({
       },
       body: JSON.stringify(commentData),
     });
-    //const posts = await response.json();
+    const updatedPost = await response.json();
+    dispatch(setPost({ post: updatedPost }));
+    setBackDrop(false);
     setComment("");
   };
 
@@ -221,7 +223,7 @@ const PostWidget = ({
         setOpenPopup={setOpenPopup}
       >
         <>
-          <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
+          <Box display="flex"  flexDirection="column" gap="1.5rem" width={300}>
             {userLikedList !== null && userLikedList.length !== 0 ? (
               <>
                 {userLikedList.map((friend) => (
@@ -253,9 +255,10 @@ const PostWidget = ({
         setOpenPopup={setOpenCommentsPopup}
       >
         <>
-          <Box display="flex" flexDirection="column" gap="1.5rem" width={300}>
+          <Box display="flex" flexDirection="column" gap="1.5rem" width={500}>
             {userCommentedList !== null && userCommentedList.length !== 0 ? (
               <>
+              <WidgetWrapper>
                 {userCommentedList.map((comment) => (
                   <>
                     <Friend
@@ -268,13 +271,12 @@ const PostWidget = ({
                     <Box
                       sx={{
                         backgroundColor: neutralLight,
-                        ml: "4rem",
-                        mr: "1rem",
+                        margin:".5rem 1rem 0rem 4rem"
                       }}
                     >
                       <Typography
                         color={dark}
-                        variant="h5"
+                        variant="h6"
                         fontWeight="500"
                         sx={{ mb: "1.5rem", padding: "1rem 1rem" }}
                       >
@@ -283,6 +285,7 @@ const PostWidget = ({
                     </Box>
                   </>
                 ))}
+                </WidgetWrapper>
               </>
             ) : (
               <Typography
