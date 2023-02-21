@@ -21,7 +21,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost, deletePost } from "state";
 import PopupWidget from "./PopupWidget";
-
+import { UsersCommentedList } from "helper/api";
 const PostWidget = ({
   postId,
   postUserId,
@@ -122,15 +122,17 @@ const PostWidget = ({
   };
 
   const showUsersCommentedList = async () => {
-    const response = await fetch(
-      `http://localhost:5000/posts/${postId}/postCommentedUsersDetails`,
-      {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    const data = await response.json();
-    setUserCommentedList(data);
+    // const response = await fetch(
+    //   `http://localhost:5000/posts/${postId}/postCommentedUsersDetails`,
+    //   {
+    //     method: "GET",
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   }
+    // );
+     //const data = await response.json();
+     
+    const response= await UsersCommentedList(postId,token)
+    setUserCommentedList(response);
   };
   const showPostCommentedUserDialog = () => {
     setBackDrop(true);
