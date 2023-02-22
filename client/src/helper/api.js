@@ -1,7 +1,8 @@
 import axios from "axios";
 import { BASE_ROUTE } from "./routes";
+
 export const createPost = async (token, formData) => {
-  const response = await fetch(`http://localhost:5000/posts`, {
+  const response = await fetch(`${BASE_ROUTE}posts`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
