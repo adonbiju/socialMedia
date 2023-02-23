@@ -1,23 +1,28 @@
-import { useEffect } from "react";
+import { useEffect,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
+import {Backdrop, CircularProgress} from "@mui/material";
 
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
-  
+  const [backDrop, setBackDrop] = useState(false);
+
   const getPosts = async () => {
+    setBackDrop(true)
     const response = await fetch("http://localhost:5000/posts", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
+    setBackDrop(false)
   };
 
   const getUserPosts = async () => {
+    setBackDrop(true)
     const response = await fetch(
       `http://localhost:5000/posts/${userId}/posts`,
       {
@@ -27,17 +32,16 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     );
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
+    setBackDrop(false)
   };
 
   useEffect(() => {
-    if (isProfile) {
-      getUserPosts();
-      console.log("user")
-    } else {
-      getPosts();
-      console.log("all")
-    }
-  }, [posts.length]); // eslint-disable-line react-hooks/exhaustive-deps
+      if (isProfile) {
+        getUserPosts();
+      } else {
+        getPosts();
+      }
+  }, [ posts.length]);; // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -68,6 +72,12 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           />
         )
       )}
+        <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backDrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 };
