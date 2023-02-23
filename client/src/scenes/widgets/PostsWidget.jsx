@@ -7,7 +7,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
-
+  
   const getPosts = async () => {
     const response = await fetch("http://localhost:5000/posts", {
       method: "GET",
@@ -32,10 +32,12 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   useEffect(() => {
     if (isProfile) {
       getUserPosts();
+      console.log("user")
     } else {
       getPosts();
+      console.log("all")
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [posts.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
