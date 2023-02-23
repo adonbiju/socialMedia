@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost, deletePost } from "state";
 import PopupWidget from "./PopupWidget";
 import { UsersCommentedList } from "helper/api";
+import {useSnackbar} from "notistack"
 const PostWidget = ({
   postId,
   postUserId,
@@ -45,6 +46,7 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+  const {enqueueSnackbar} = useSnackbar();
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -99,6 +101,7 @@ const PostWidget = ({
     )
       .then(() => dispatch(deletePost(postId)))
       .then(() => setBackDrop(false));
+      enqueueSnackbar('Post deleted Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
   };
 
   const handleComment = async () => {
@@ -119,6 +122,7 @@ const PostWidget = ({
     dispatch(setPost({ post: updatedPost }));
     setBackDrop(false);
     setComment("");
+    enqueueSnackbar('Comment Added Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
   };
 
   const showUsersCommentedList = async () => {
