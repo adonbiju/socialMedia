@@ -13,6 +13,7 @@ import {
   Backdrop,
   CircularProgress,
   InputBase,
+  useMediaQuery
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
@@ -39,6 +40,7 @@ const PostWidget = ({
   const [userCommentedList, setUserCommentedList] = useState(null);
   const [comment, setComment] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
+
   const [openCommentsPopup, setOpenCommentsPopup] = useState(false);
   const [backDrop, setBackDrop] = useState(false);
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ const PostWidget = ({
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
   const {enqueueSnackbar} = useSnackbar();
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -261,7 +264,7 @@ const PostWidget = ({
         setOpenPopup={setOpenCommentsPopup}
       >
         <>
-          <Box display="flex" flexDirection="column" gap="1.5rem" width={500}>
+          <Box display="flex" flexDirection="column" gap="1.5rem" width={isNonMobileScreens?500:370}>
             {userCommentedList !== null && userCommentedList.length !== 0 ? (
               <>
               <WidgetWrapper>
@@ -277,7 +280,8 @@ const PostWidget = ({
                     <Box
                       sx={{
                         backgroundColor: neutralLight,
-                        margin:".5rem 1rem 0rem 4rem"
+                        margin:".5rem 1rem 0rem 4rem",
+                        borderRadius:"0.75rem"
                       }}
                     >
                       <Typography
@@ -306,6 +310,7 @@ const PostWidget = ({
           </Box>
         </>
       </PopupWidget>
+
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backDrop}
