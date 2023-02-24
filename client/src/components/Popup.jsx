@@ -1,7 +1,6 @@
-import React from 'react'
 import { Dialog,DialogActions,DialogContent,DialogTitle,Button} from "@mui/material";
 
-const PopupWidget = (props) => {
+const Popup = (props) => {
   const { title, children, openPopup, setOpenPopup } = props;
   return (
     <Dialog open={openPopup} >
@@ -15,4 +14,4 @@ const PopupWidget = (props) => {
   )
 }
 
-export default PopupWidget
+export default Popup

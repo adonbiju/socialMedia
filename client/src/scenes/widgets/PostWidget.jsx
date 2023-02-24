@@ -21,7 +21,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost, deletePost } from "state";
-import PopupWidget from "./PopupWidget";
+import Popup from "components/Popup";
 import { UsersCommentedList } from "helper/api";
 import {useSnackbar} from "notistack"
 const PostWidget = ({
@@ -227,7 +227,7 @@ const PostWidget = ({
       )}
       {/* it will pop up the friends details */}
 
-      <PopupWidget
+      <Popup
         title="Likes"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
@@ -258,8 +258,8 @@ const PostWidget = ({
             )}
           </Box>
         </>
-      </PopupWidget>
-      <PopupWidget
+      </Popup>
+      <Popup
         title="Comments"
         openPopup={openCommentsPopup}
         setOpenPopup={setOpenCommentsPopup}
@@ -310,12 +310,12 @@ const PostWidget = ({
             )}
           </Box>
         </>
-      </PopupWidget>
-      <PopupWidget title="Conformation" openPopup={openConformaionPopup}  setOpenPopup={setOpenConformationPopup} clickHandler={handleDeletePost} >
+      </Popup>
+      <Popup title="Conformation" openPopup={openConformaionPopup}  setOpenPopup={setOpenConformationPopup} clickHandler={handleDeletePost} >
         <Typography  color={dark} variant="h5"  fontWeight="500"   sx={{ mb: "1.5rem" }}  >
               Are you sure want to delete this post?
         </Typography>
-      </PopupWidget>
+      </Popup>
       
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
