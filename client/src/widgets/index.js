@@ -1,5 +1,5 @@
 import AdvertWidget from "./AdvertWidget";
-import BottomNavigationWidget from "./BottomNavigationWidget";
+import BottomNavigationWidget from "../components/BottomNavigation";
 import FriendListWidget from "./FriendListWidget";
 import MyPostWidget from "./MyPostWidget";
 import PostWidget from "./PostWidget";

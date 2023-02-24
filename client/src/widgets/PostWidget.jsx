@@ -15,13 +15,10 @@ import {
   InputBase,
   useMediaQuery
 } from "@mui/material";
-import FlexBetween from "components/FlexBetween";
-import Friend from "components/Friend";
-import WidgetWrapper from "components/WidgetWrapper";
+import { Popup,FlexBetween,Friend,WidgetWrapper } from "components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost, deletePost } from "state";
-import Popup from "components/Popup";
 import { UsersCommentedList } from "helper/api";
 import {useSnackbar} from "notistack"
 const PostWidget = ({

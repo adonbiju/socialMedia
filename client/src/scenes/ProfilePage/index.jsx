@@ -1,10 +1,9 @@
 import { Box, useMediaQuery } from "@mui/material";
-import Loading from "components/Loading";
+import { Navbar,BottomNavigation,Loading } from "components";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Navbar from "scenes/Navbar";
-import { MyPostWidget,BottomNavigationWidget,FriendListWidget,PostsWidget,UserWidget } from "widgets";
+import { MyPostWidget,FriendListWidget,PostsWidget,UserWidget } from "widgets";
 
 
 const ProfilePage = () => {
@@ -56,7 +55,7 @@ const ProfilePage = () => {
           <PostsWidget userId={userId} isProfile />
         </Box>
       </Box>
-      {!isNonMobileScreens && (<BottomNavigationWidget/>)}
+      {!isNonMobileScreens && (<BottomNavigation/>)}
     </Box>
   );
 };

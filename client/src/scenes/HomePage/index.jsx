@@ -1,6 +1,6 @@
 import { Box, useMediaQuery } from "@mui/material";
-import Navbar from "scenes/Navbar";
-import { BottomNavigationWidget,AdvertWidget,FriendListWidget,MyPostWidget,PostsWidget,UserWidget } from "widgets";
+import { Navbar,BottomNavigation } from "components";
+import {AdvertWidget,FriendListWidget,MyPostWidget,PostsWidget,UserWidget } from "widgets";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
@@ -34,7 +34,7 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
-      {!isNonMobileScreens && (<BottomNavigationWidget/>)}
+      {!isNonMobileScreens && (<BottomNavigation/>)}
     </Box>
   );
 };
