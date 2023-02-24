@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Friend from "components/Friend";
-
+import { getAllUsersApi } from "helper/api";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -12,11 +12,7 @@ const LiveSearch = () => {
   const [allUsers, setAllUsers] = useState(false);
 
   const getAllUsers = async () => {
-    const response = await fetch(`http://localhost:5000/user`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
+    const data = await getAllUsersApi(token)
     setAllUsers(data);
   };
 

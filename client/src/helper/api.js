@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_ROUTE } from "./routes";
 
 export const createPost = async (token, formData) => {
-  const response = await fetch(`${BASE_ROUTE}posts`, {
+  const response = await fetch(`${BASE_ROUTE}/posts`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
@@ -12,7 +12,14 @@ export const createPost = async (token, formData) => {
 
 
 export const UsersCommentedList = async(postId,token) => {
-  const response = await axios.get(`${BASE_ROUTE}posts/${postId}/postCommentedUsersDetails`, {
+  const response = await axios.get(`${BASE_ROUTE}/posts/${postId}/postCommentedUsersDetails`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  return response.data
+}
+
+export const getAllUsersApi = async(token) => {
+  const response = await axios.get(`${BASE_ROUTE}/user`, {
     headers: { Authorization: `Bearer ${token}` },
   })
   return response.data
