@@ -24,3 +24,10 @@ export const getAllUsersApi = async(token) => {
   })
   return response.data
 }
+
+export const AddOrRemoveFriendApi = async(_id,friendId,token) => {
+  const response = await  await axios.patch(`${BASE_ROUTE}/user/${_id}/${friendId}`, {}, {
+    headers: { Authorization: `Bearer ${token}`,  'content-type': 'application/json' },
+  })
+  return response.data
+}

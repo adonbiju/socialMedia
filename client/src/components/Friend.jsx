@@ -15,6 +15,7 @@ import { useState } from "react";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
+import { AddOrRemoveFriendApi } from "helper/api";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
@@ -36,17 +37,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
   const patchFriend = async () => {
     setBackDrop(true);
-    const response = await fetch(
-      `http://localhost:5000/user/${_id}/${friendId}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
+    const data = await AddOrRemoveFriendApi(_id,friendId,token);
     dispatch(setFriends({ friends: data }));
     setBackDrop(false);
     setSnackbar(true);
