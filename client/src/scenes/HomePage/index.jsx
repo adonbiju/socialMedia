@@ -1,11 +1,6 @@
 import { Box, useMediaQuery } from "@mui/material";
 import Navbar from "scenes/Navbar";
-import UserWidget from "scenes/widgets/UserWidget";
-import MyPostWidget from "scenes/widgets/MyPostWidget";
-import PostsWidget from "scenes/widgets/PostsWidget";
-import AdvertWidget from "scenes/widgets/AdvertWidget";
-import FriendListWidget from "scenes/widgets/FriendListWidget";
-import BottomNavigationWidget from "scenes/widgets/BottomNavigationWidget";
+import { BottomNavigationWidget,AdvertWidget,FriendListWidget,MyPostWidget,PostsWidget,UserWidget } from "widgets";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
