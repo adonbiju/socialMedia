@@ -8,6 +8,7 @@ const PopupWidget = (props) => {
           <DialogTitle>{title}</DialogTitle>
           <DialogContent dividers>{children}</DialogContent>
           <DialogActions>
+            {props.clickHandler && (<Button onClick={props.clickHandler}>Yes</Button>)}
             <Button onClick={()=>{setOpenPopup(false)}}>Close</Button>
           </DialogActions>
       </Dialog>

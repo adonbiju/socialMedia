@@ -42,6 +42,7 @@ const PostWidget = ({
   const [openPopup, setOpenPopup] = useState(false);
 
   const [openCommentsPopup, setOpenCommentsPopup] = useState(false);
+  const [openConformaionPopup,setOpenConformationPopup]=useState(false)
   const [backDrop, setBackDrop] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
@@ -198,7 +199,7 @@ const PostWidget = ({
           </FlexBetween>
         </FlexBetween>
         {loggedInUserId === postUserId && (
-          <IconButton onClick={handleDeletePost}>
+          <IconButton onClick={()=>setOpenConformationPopup(true)}>
             <DeleteOutlineOutlined />
           </IconButton>
         )}
@@ -310,7 +311,12 @@ const PostWidget = ({
           </Box>
         </>
       </PopupWidget>
-
+      <PopupWidget title="Conformation" openPopup={openConformaionPopup}  setOpenPopup={setOpenConformationPopup} clickHandler={handleDeletePost} >
+        <Typography  color={dark} variant="h5"  fontWeight="500"   sx={{ mb: "1.5rem" }}  >
+              Are you sure want to delete this post?
+        </Typography>
+      </PopupWidget>
+      
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backDrop}
