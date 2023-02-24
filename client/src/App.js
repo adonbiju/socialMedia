@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "scenes/LoginPage";
+import LoginPage from "pages/LoginPage";
 import { routes } from "./routes";
 
 import { useMemo } from "react";

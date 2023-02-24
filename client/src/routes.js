@@ -1,8 +1,7 @@
-import HomePage from "scenes/HomePage"
-import ProfilePage from "scenes/ProfilePage"
+import { HomePage,ProfilePage} from "pages"
 
 export const routes = [
-   
+
     {
         path: '/home',
         component: HomePage
