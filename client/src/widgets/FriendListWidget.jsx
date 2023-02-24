@@ -1,14 +1,17 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { WidgetWrapper,Friend } from "components";
-import { useEffect } from "react";
+import { WidgetWrapper,Friend} from "components";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "state";
+
 
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
+  const {_id} = useSelector((state) => state.user)
+  const [friends2,setFriends2] = useState(null)
 
   const getFriends = async () => {
     const response = await fetch(
@@ -19,12 +22,18 @@ const FriendListWidget = ({ userId }) => {
       }
     );
     const data = await response.json();
+    if(userId===_id){
     dispatch(setFriends({ friends: data }));
+    }else{
+    setFriends2(data)
+    }
   };
 
   useEffect(() => {
     getFriends();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+   
+  // if (!friends2) return null;
 
   return (
     <WidgetWrapper>
@@ -37,8 +46,8 @@ const FriendListWidget = ({ userId }) => {
         Friend List
       </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
-        <>
-          {friends.map((friend) => (
+        {(userId.toString()===_id.toString())?( <>
+          {friends && friends.map((friend) => (
             <Friend
               key={friend._id}
               friendId={friend._id}
@@ -47,7 +56,19 @@ const FriendListWidget = ({ userId }) => {
               userPicturePath={friend.picturePath}
             />
           ))}
-        </>
+        </>):( <>
+          {friends2 && friends2.map((friend) => (
+            <Friend
+              key={friend._id}
+              friendId={friend._id}
+              name={`${friend.firstName} ${friend.lastName}`}
+              subtitle={friend.occupation}
+              userPicturePath={friend.picturePath}
+            />
+          ))}
+        </>)
+        }
+        
       </Box>
     </WidgetWrapper>
   );

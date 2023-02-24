@@ -10,7 +10,6 @@ export const createPost = async (token, formData) => {
   return response;
 };
 
-
 export const UsersCommentedList = async(postId,token) => {
   const response = await axios.get(`${BASE_ROUTE}/posts/${postId}/postCommentedUsersDetails`, {
     headers: { Authorization: `Bearer ${token}` },
