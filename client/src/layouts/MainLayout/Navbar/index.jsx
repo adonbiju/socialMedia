@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
-import FlexBetween from "components/FlexBetween";
+import { FlexBetween } from "components";
 import LiveSearch from "./LiveSearch";
 
 const Navbar = () => {

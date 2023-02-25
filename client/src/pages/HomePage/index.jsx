@@ -1,5 +1,4 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { Navbar,BottomNavigation } from "components";
 import {AdvertWidget,FriendListWidget,MyPostWidget,PostsWidget,UserWidget } from "widgets";
 import { useSelector } from "react-redux";
 
@@ -8,7 +7,6 @@ const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   return (
     <Box>
-      <Navbar />
       <Box
         width="100%"
         padding="2rem 6%"
@@ -34,7 +32,6 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
-      {!isNonMobileScreens && (<BottomNavigation/>)}
     </Box>
   );
 };

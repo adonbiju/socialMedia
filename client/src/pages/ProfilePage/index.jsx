@@ -1,5 +1,5 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { Navbar,BottomNavigation,Loading } from "components";
+import { Loading } from "components";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -33,7 +33,6 @@ const ProfilePage = () => {
   }
   return (
     <Box>
-      <Navbar />
       <Box
         width="100%"
         padding="2rem 6%"
@@ -55,7 +54,6 @@ const ProfilePage = () => {
           <PostsWidget userId={userId} isProfile />
         </Box>
       </Box>
-      {!isNonMobileScreens && (<BottomNavigation/>)}
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "pages/LoginPage";
 import { routes } from "./routes";
 
@@ -7,10 +7,11 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+import MainLayout from "layouts/MainLayout/MainLayout";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  const isAuth = Boolean(useSelector((state) => state.token));
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -18,13 +19,15 @@ function App() {
           <CssBaseline />
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            {routes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={isAuth ? <route.component /> : <Navigate to="/" />}
-              />
-            ))}
+            <Route element={<MainLayout />}>
+              {routes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<route.component />}
+                />
+              ))}
+            </Route>
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

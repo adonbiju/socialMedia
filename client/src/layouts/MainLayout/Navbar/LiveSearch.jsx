@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import Friend from "components/Friend";
+import {Friend} from "components";
 import { getAllUsersApi } from "helper/api";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import WidgetWrapper from "components/WidgetWrapper";
+import { WidgetWrapper } from "components";
 
 const LiveSearch = () => {
   const token = useSelector((state) => state.token);
