@@ -24,7 +24,7 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import { FlexBetween } from "components";
 import LiveSearch from "./LiveSearch";
-
+import {useSnackbar} from "notistack"
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -38,7 +38,11 @@ const Navbar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
+  const {enqueueSnackbar} = useSnackbar();
+  const handleLogout=()=>{
+    dispatch(setLogout())
+    enqueueSnackbar('Logouted Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
+}
   const fullName = `${user.firstName} ${user.lastName}`;
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -104,7 +108,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography  onClick={() => navigate(`/profile/${user._id}`)}>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -179,7 +183,7 @@ const Navbar = () => {
                 <MenuItem value={fullName}>
                   <Typography onClick={() => navigate(`/profile/${user._id}`)}>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
+                <MenuItem onClick={handleLogout}>
                   Log Out
                 </MenuItem>
               </Select>
