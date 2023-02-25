@@ -41,7 +41,7 @@ const Navbar = () => {
   const {enqueueSnackbar} = useSnackbar();
   const handleLogout=()=>{
     dispatch(setLogout())
-    enqueueSnackbar('Logouted Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
+    enqueueSnackbar('Logout Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
 }
   const fullName = `${user.firstName} ${user.lastName}`;
   return (

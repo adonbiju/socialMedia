@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useState } from "react";
-
+import {useSnackbar} from "notistack"
 const BottomNavigationWidget = () => {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -23,6 +23,11 @@ const BottomNavigationWidget = () => {
   const { _id } = useSelector((state) => state.user);
   const theme = useTheme();
   const dark = theme.palette.neutral.dark;
+  const {enqueueSnackbar} = useSnackbar();
+  const handleLogout=()=>{
+    dispatch(setLogout())
+    enqueueSnackbar('Logout Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
+}
   return (
     <Paper
       sx={{ position: "fixed", bottom: 0, left: 0, right: 0,zIndex:1 }}
@@ -58,7 +63,7 @@ const BottomNavigationWidget = () => {
         <BottomNavigationAction
           label="Logout"
           icon={<LogoutOutlined />}
-          onClick={() => dispatch(setLogout())}
+          onClick={handleLogout}
         />
       </BottomNavigation>
     </Paper>
