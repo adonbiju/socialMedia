@@ -3,7 +3,7 @@ import { Loading } from "components";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { MyPostWidget,FriendListWidget,PostsWidget,UserWidget } from "widgets";
+import { MyPostWidget,FriendListWidget,PostsWidget,UserWidget,CoverPhotoWidget } from "widgets";
 
 
 const ProfilePage = () => {
@@ -33,6 +33,10 @@ const ProfilePage = () => {
   }
   return (
     <Box>
+      <Box width="100%" padding="2rem 6%" display="flex" gap="2rem" justifyContent="center" >
+          <Box flexBasis={isNonMobileScreens ? "70%" : "100%"}><CoverPhotoWidget/></Box>
+      </Box>
+      
       <Box
         width="100%"
         padding="2rem 6%"

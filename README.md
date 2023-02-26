@@ -12,7 +12,7 @@ its is **MERN STACK** Project.
 * React Dropzone for image upload.
 * Material UI
 ```
-## Technologies used for the Backtend.
+## Technologies used for the Backend.
 
 ```bash
 * Node.js
