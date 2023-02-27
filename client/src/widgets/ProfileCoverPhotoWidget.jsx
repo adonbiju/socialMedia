@@ -1,11 +1,14 @@
 
-import { WidgetWrapper } from "components";
+import { WidgetWrapper ,Popup,UploadPhoto} from "components";
 import { Box, useMediaQuery, useTheme, Typography, Button, Stack } from "@mui/material";
+import { useState } from "react";
 
-const CoverPhotoWidget = () => {
+const ProfileCoverPhotoWidget = () => {
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const isMobileScreens = useMediaQuery("(max-width:1000px)");
+  const [openCoverPhotoPopup,setOpenCoverPhotoPopup]=useState(false)
+
   return (
     <WidgetWrapper>
       <Box position="relative">
@@ -15,7 +18,7 @@ const CoverPhotoWidget = () => {
             src={`http://localhost:5000/assets/info4.jpeg`}
           />
           <Box margin="1rem" >
-            <Button variant="contained" size="small" sx={{ color: palette.background.alt, backgroundColor: palette.primary.main, borderRadius: "3rem", }} >
+            <Button onClick={()=>setOpenCoverPhotoPopup(true)} variant="contained" size="small" sx={{ color: palette.background.alt, backgroundColor: palette.primary.main, borderRadius: "3rem", }} >
               Add Cover Photo
             </Button>
           </Box>
@@ -47,8 +50,11 @@ const CoverPhotoWidget = () => {
         </Box>
 
       </Box>
+      <Popup title="Upload your cover photo " openPopup={openCoverPhotoPopup}  setOpenPopup={setOpenCoverPhotoPopup}  >
+        <UploadPhoto/>
+      </Popup>
     </WidgetWrapper>
   );
 }
 
-export default CoverPhotoWidget;
+export default ProfileCoverPhotoWidget;
