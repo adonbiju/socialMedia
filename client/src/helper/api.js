@@ -25,8 +25,15 @@ export const getAllUsersApi = async(token) => {
 }
 
 export const AddOrRemoveFriendApi = async(_id,friendId,token) => {
-  const response = await  await axios.patch(`${BASE_ROUTE}/user/${_id}/${friendId}`, {}, {
+  const response = await axios.patch(`${BASE_ROUTE}/user/${_id}/${friendId}`, {}, {
     headers: { Authorization: `Bearer ${token}`,  'content-type': 'application/json' },
+  })
+  return response.data
+}
+
+export const UploadCoverPhoto = async(_id,token,formData) => {
+  const response = await axios.patch(`${BASE_ROUTE}/user/${_id}/uplaoadCoverPhoto`, formData, {
+    headers: { Authorization: `Bearer ${token}`},
   })
   return response.data
 }

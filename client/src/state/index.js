@@ -45,9 +45,16 @@ export const authSlice = createSlice({
     },
     setLoading:(state,action)=>{
       state.loading=action.payload.loading;
+    },
+    setUserCoverPicture: (state, action) => {
+      if (state.user) {
+        state.user.coverPhotoPath = action.payload.coverPhotoPath;
+      } else {
+        console.error("user friends non-existent :(");
+      }
     }
   },
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost,setLoading ,deletePost} =authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost,setLoading ,deletePost,setUserCoverPicture} =authSlice.actions;
 export default authSlice.reducer;

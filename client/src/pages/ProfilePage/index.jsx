@@ -34,7 +34,7 @@ const ProfilePage = () => {
   return (
     <Box>
       <Box width="100%" padding="2rem 6%" display="flex" gap="2rem" justifyContent="center" >
-          <Box flexBasis={isNonMobileScreens ? "70%" : "100%"}><ProfileCoverPhotoWidget/></Box>
+          <Box flexBasis={isNonMobileScreens ? "70%" : "100%"}><ProfileCoverPhotoWidget userId={userId} /></Box>
       </Box>
       
       <Box

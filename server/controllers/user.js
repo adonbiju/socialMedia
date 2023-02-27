@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-
+import { unlinkSync,existsSync } from "fs";
 /* READ All Users */
 export const getAllUsers = async (req, res) => {
   try {
@@ -67,6 +67,22 @@ export const addRemoveFriend = async (req, res) => {
     );
 
     res.status(200).json(formattedFriends);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+export const uploadCoverPhoto = async (req, res) => {
+  try {
+    const { id} = req.params;
+    const {coverPhotoPath }=req.body;
+    const oldCoverPhotoPath = await User.findById(id)
+    const fileExist = existsSync('./public/assets/'+oldCoverPhotoPath.coverPhotoPath)
+    if(fileExist && (coverPhotoPath!==oldCoverPhotoPath.coverPhotoPath)){
+      unlinkSync('./public/assets/'+oldCoverPhotoPath.coverPhotoPath)
+    }
+    const user= await User.findByIdAndUpdate(id,{coverPhotoPath:coverPhotoPath}, { new: true })
+    res.status(200).json(user);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

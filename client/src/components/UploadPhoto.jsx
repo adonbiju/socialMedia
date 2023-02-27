@@ -1,5 +1,5 @@
 import {
-    EditOutlined,
+  EditOutlined,
   DeleteOutlined,
 } from "@mui/icons-material";
 import {
@@ -13,17 +13,36 @@ import {
 import { FlexBetween, WidgetWrapper } from "components";
 import Dropzone from "react-dropzone";
 import { useState } from "react";
-
-
+import {useSnackbar} from "notistack"
+import { UploadCoverPhoto } from "helper/api";
+import { useSelector,useDispatch } from "react-redux";
+import { setUserCoverPicture } from "state";
 
 const UploadPhoto = () => {
- 
-
+  const token = useSelector((state) => state.token);
+  const {_id} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [image, setImage] = useState(null);
   const { palette } = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const medium = palette.neutral.medium;
-
+  const {enqueueSnackbar} = useSnackbar();
+  
+  const handleUploadCoverPhoto = async () => {
+    const formData = new FormData();
+    if (image) {
+      formData.append("picture", image);
+      formData.append("coverPhotoPath", image.name);
+    }
+     const updatedUser = await  UploadCoverPhoto(_id,token,formData)
+     dispatch(
+        setUserCoverPicture({
+            coverPhotoPath: updatedUser.coverPhotoPath,
+        })
+      )
+    setImage(null);
+    enqueueSnackbar('Cover Photo Uploaded Successfully!!', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
+  };
   return (
     <WidgetWrapper width={isNonMobileScreens ? 500 : 370}>
       {image && (
@@ -76,6 +95,7 @@ const UploadPhoto = () => {
       <Box display={"flex"} justifyContent={"flex-end"} mt={"1.5rem"}>
         <Button
           disabled={!image}
+          onClick={handleUploadCoverPhoto}
           sx={{
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
