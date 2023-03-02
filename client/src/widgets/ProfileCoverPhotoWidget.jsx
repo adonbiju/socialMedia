@@ -23,7 +23,6 @@ const ProfileCoverPhotoWidget = ({userId}) => {
   const isFriend = friends.find((friend) => friend._id === userId);
   const {enqueueSnackbar} = useSnackbar();
 
-  console.log(isFriend)
   const getUser = async () => {
     const response = await fetch(`http://localhost:5000/user/${userId}`, {
       method: "GET",
@@ -54,7 +53,7 @@ const ProfileCoverPhotoWidget = ({userId}) => {
 
         <Box display="flex" gap="2rem" justifyContent="flex-end">
           
-          {(user._id===_id) &&<img style={{ objectFit: "cover", position: "absolute" }} width="100%" height="250px" alt="CoverPhoto"
+          {((user._id===_id) &&(coverPhotoPath!==null)) &&<img style={{ objectFit: "cover", position: "absolute" }} width="100%" height="250px" alt="CoverPhoto"
             src={`http://localhost:5000/assets/${coverPhotoPath}`}
           />}
            {(user._id!==_id) &&<img style={{ objectFit: "cover", position: "absolute" }} width="100%" height="250px" alt="CoverPhoto"

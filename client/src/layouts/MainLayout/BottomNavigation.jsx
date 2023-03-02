@@ -48,7 +48,10 @@ const BottomNavigationWidget = () => {
         <BottomNavigationAction
           label="Profile"
           icon={<AccountCircleOutlined />}
-          onClick={() => navigate(`/profile/${_id}`)}
+          onClick={() => {
+            navigate(`/profile/${_id}`);
+            navigate(0);
+          }}
         />
         <BottomNavigationAction
           onClick={() => dispatch(setMode())}
