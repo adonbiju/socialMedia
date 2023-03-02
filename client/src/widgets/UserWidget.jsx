@@ -18,7 +18,7 @@ const UserWidget = ({ userId, picturePath }) => {
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-
+  const userRedux = useSelector((state) => state.user);
   const getUser = async () => {
     const response = await fetch(`http://localhost:5000/user/${userId}`, {
       method: "GET",
@@ -70,7 +70,7 @@ const UserWidget = ({ userId, picturePath }) => {
             >
               {firstName} {lastName}
             </Typography>
-            <Typography color={medium}>{friends.length} friends</Typography>
+            <Typography color={medium}>{(userId===userRedux._id)?(userRedux.friends.length):(friends.length)} friends</Typography>
           </Box>
         </FlexBetween>
         <ManageAccountsOutlined />
