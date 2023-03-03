@@ -84,7 +84,7 @@ const ProfileCoverPhotoWidget = ({ userId }) => {
                 width="100%"
                 height="250px"
                 alt="CoverPhoto"
-                src={`http://localhost:5000/assets/info4.jpeg`}
+                src={`http://localhost:5000/assets/coverphoto.jpg`}
               />
             )
           ) : user.coverPhotoPath !== null ? (
@@ -101,7 +101,7 @@ const ProfileCoverPhotoWidget = ({ userId }) => {
               width="100%"
               height="250px"
               alt="CoverPhoto"
-              src={`http://localhost:5000/assets/info4.jpeg`}
+              src={`http://localhost:5000/assets/coverphoto.jpg`}
             />
           )}
 
