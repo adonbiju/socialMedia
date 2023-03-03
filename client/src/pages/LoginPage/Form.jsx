@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { setLogin, setLoading } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
+import {useSnackbar} from "notistack"
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -54,7 +55,7 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-
+  const {enqueueSnackbar} = useSnackbar();
   const register = async (values, onSubmitProps) => {
     dispatch(
       setLoading({
@@ -100,7 +101,16 @@ const Form = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
-    });
+    })
+    if (loggedInResponse.status === 400) {
+      const responseJson = await loggedInResponse.json();
+      dispatch(
+        setLoading({
+          loading: false,
+        })
+      );
+      enqueueSnackbar(responseJson.msg, { variant: 'warning',anchorOrigin:{ vertical: "top", horizontal: "right" } })
+    }
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -117,6 +127,7 @@ const Form = () => {
         })
       );
       navigate("/home");
+      enqueueSnackbar('loggedIn Successfully', { variant: 'success',anchorOrigin:{ vertical: "top", horizontal: "right" } })
     }
   };
   const handleFormSubmit = async (values, onSubmitProps) => {
