@@ -265,7 +265,7 @@ const PostWidget = ({
           <Box display="flex" flexDirection="column" gap="1.5rem" width={isNonMobileScreens?500:370}>
             {userCommentedList !== null && userCommentedList.length !== 0 ? (
               <>
-              <WidgetWrapper>
+              <WidgetWrapper >
                 {userCommentedList.map((comment) => (
                   <>
                     <Friend
