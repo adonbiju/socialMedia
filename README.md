@@ -90,6 +90,9 @@ Start the Client
 ```bash
   npm  start
 ```
-## Demo (Clik the below image)
+## Demo 
+### Click the below image to watch the demo video in youtube.
+<div align="center">
 
-  [![SocialMedia](https://img.youtube.com/vi/LvKiHRaLjGQ/0.jpg)](https://www.youtube.com/watch?v=LvKiHRaLjGQ)
+   [![SocialMedia](https://img.youtube.com/vi/LvKiHRaLjGQ/0.jpg)](https://www.youtube.com/watch?v=LvKiHRaLjGQ)
+<div/>
