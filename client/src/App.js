@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "pages/LoginPage";
 import { routes } from "./routes";
-
-import { useMemo } from "react";
+import { Loading } from "components";
+import { useMemo ,Suspense} from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -17,6 +17,7 @@ function App() {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route element={<MainLayout />}>
@@ -29,6 +30,7 @@ function App() {
               ))}
             </Route>
           </Routes>
+          </ Suspense >
         </ThemeProvider>
       </BrowserRouter>
     </div>
